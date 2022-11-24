@@ -1,0 +1,57 @@
+<div class="mtx-time-wrapper">
+  <input 
+    class="mtx-time-input" 
+    [class.mtx-time-input-active]="startView !== 'minute'" 
+    type="text" 
+    inputmode="numeric" 
+    min="0" 
+    [max]="twelvehour ? 11 : 23" 
+    maxlength="2"
+    (keypress)="validateNumberInput($event)"
+    (keyup)="validateNumberWithinBounds($event)"
+    (change)="handleHourChange($event)"
+    [placeholder]="hour"
+    [value]="hour"
+    #hourInput
+    (focus)="focusHour(); hourInput.value = ''"
+    (blur)="hourInput.value = (hour + '')"
+  > 
+  <div class="mtx-time-seperator">
+    <span>:</span>
+  </div>
+  <input 
+    class="mtx-time-input" 
+    [class.mtx-time-input-active]="startView === 'minute'" 
+    type="text" 
+    inputmode="numeric"
+    min="0"
+    max="59"
+    maxlength="2"
+    (keypress)="validateNumberInput($event)" 
+    (keyup)="validateNumberWithinBounds($event)"
+    (change)="handleMinuteChange($event)"
+    [placeholder]="minute"
+    [value]="minute"
+    #minuteInput
+    (focus)="focusMinute(); minuteInput.value = ''"
+    (blur)="minuteInput.value = (minute + '')"
+  >
+  <div class="mtx-time-am" *ngIf="twelvehour">
+    
+  </div>
+</div>
+
+<mtx-clock 
+  #clock
+  (activeDateChange)="handleActiveDateChange($event)"
+  (selectedChange)="handleSelectedChange($event)"      
+  [dateFilter]="dateFilter"
+  [interval]="interval"
+  [maxDate]="maxDate"
+  [minDate]="minDate"
+  [selected]="activeDate"
+  [startView]="startView"
+  [twelvehour]="twelvehour">
+</mtx-clock>
+
+<button (click)="handleConfirmation()">Ok</button>

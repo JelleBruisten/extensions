@@ -17,6 +17,7 @@ import { MtxDatetimepickerToggle, MtxDatetimepickerToggleIcon } from './datetime
 import { MtxMonthView } from './month-view';
 import { MtxYearView } from './year-view';
 import { MtxMultiYearView } from './multi-year-view';
+import { MtxTime } from './time';
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, OverlayModule, A11yModule, PortalModule],
@@ -24,6 +25,7 @@ import { MtxMultiYearView } from './multi-year-view';
     MtxCalendar,
     MtxCalendarBody,
     MtxClock,
+    MtxTime,
     MtxDatetimepicker,
     MtxDatetimepickerToggle,
     MtxDatetimepickerToggleIcon,
@@ -37,6 +39,7 @@ import { MtxMultiYearView } from './multi-year-view';
     MtxCalendar,
     MtxCalendarBody,
     MtxClock,
+    MtxTime,
     MtxDatetimepicker,
     MtxDatetimepickerToggle,
     MtxDatetimepickerToggleIcon,

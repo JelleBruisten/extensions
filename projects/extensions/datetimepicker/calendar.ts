@@ -43,6 +43,8 @@ import { MtxDatetimepickerType } from './datetimepicker-types';
 /** Possible views for datetimepicker calendar. */
 export type MtxCalendarView = 'clock' | 'month' | 'year' | 'multi-year';
 
+export type MtxAmPm = 'AM' | 'PM' | '';
+
 /**
  * A calendar that is used as part of the datetimepicker.
  * @docs-private
@@ -53,6 +55,7 @@ export type MtxCalendarView = 'clock' | 'month' | 'year' | 'multi-year';
   styleUrls: ['calendar.scss'],
   host: {
     'class': 'mtx-calendar',
+    '[class.mtx-time-input-calendar]': 'timeInput',
     'tabindex': '0',
     '(keydown)': '_handleCalendarBodyKeydown($event)',
   },
@@ -82,6 +85,31 @@ export class MtxCalendar<D> implements AfterContentInit, OnDestroy {
   }
   private _twelvehour = false;
 
+  /**
+   * Whether the calendar UI is in touch mode. In touch mode the calendar opens in a dialog rather
+   * than a popup and elements have more padding to allow for bigger touch targets and does not display the time inputs
+   */
+  @Input()
+  get touchUi(): boolean {
+    return this._touchUi;
+  }
+  set touchUi(value: boolean) {
+    this._touchUi = coerceBooleanProperty(value);
+  }
+  private _touchUi = false;
+
+  /**
+   * Wheter the calendar should show manual time inputs, if off will just show clock
+   */
+  @Input()
+  get timeInput(): boolean {
+    return this._timeInput;
+  }
+  set timeInput(value: boolean) {
+    this._timeInput = coerceBooleanProperty(value);
+  }
+  private _timeInput = false;
+
   /** Whether the calendar should be started in month or year view. */
   @Input() startView: MtxCalendarView = 'month';
 
@@ -102,7 +130,7 @@ export class MtxCalendar<D> implements AfterContentInit, OnDestroy {
 
   @Output() _userSelection = new EventEmitter<void>();
 
-  _AMPM!: string;
+  _AMPM!: MtxAmPm;
 
   _clockView: MtxClockView = 'hour';
 
@@ -378,12 +406,35 @@ export class MtxCalendar<D> implements AfterContentInit, OnDestroy {
 
   _timeSelected(date: D): void {
     if (this._clockView !== 'minute') {
-      this._activeDate = this._updateDate(date);
       this._clockView = 'minute';
+
+      // update the date according to AM/PM
+      this._activeDate = this._updateDate(date);
     } else {
-      if (!this._adapter.sameDatetime(date, this.selected) || !this.preventSameDateTimeSelection) {
-        this.selectedChange.emit(date);
-      }
+      // update current date
+      this._activeDate = date;
+    }
+
+    if (!this._adapter.sameDatetime(date, this.selected) || !this.preventSameDateTimeSelection) {
+      this.selectedChange.emit(this._activeDate);
+    }
+  }
+
+  _hourSelected(date: D) {
+    // update the date according to AM/PM
+    this._activeDate = date;
+
+    if (!this._adapter.sameDatetime(date, this.selected) || !this.preventSameDateTimeSelection) {
+      this.selectedChange.emit(this._activeDate);
+    }
+  }
+
+  _minuteSelected(date: D) {
+    // update current date
+    this._activeDate = date;
+
+    if (!this._adapter.sameDatetime(date, this.selected) || !this.preventSameDateTimeSelection) {
+      this.selectedChange.emit(this._activeDate);
     }
   }
 
@@ -413,7 +464,7 @@ export class MtxCalendar<D> implements AfterContentInit, OnDestroy {
     }
   }
 
-  _ampmClicked(source: string): void {
+  _ampmClicked(source: MtxAmPm): void {
     if (source === this._AMPM) {
       return;
     }
@@ -743,4 +794,5 @@ export class MtxCalendar<D> implements AfterContentInit, OnDestroy {
 
   static ngAcceptInputType_multiYearSelector: BooleanInput;
   static ngAcceptInputType_twelvehour: BooleanInput;
+  static ngAcceptInputType_touchUi: BooleanInput;
 }

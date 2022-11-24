@@ -132,6 +132,30 @@ $clock-font-size: 14px !default;
       color: theming.get-color-from-palette(map.get($config, warn), text);
     }
   }
+
+  // time input
+  .mtx-time-input {
+    color: theming.get-color-from-palette($foreground, text);
+    background-color: theming.get-color-from-palette($background, disabled-button);
+    border-color: transparent;
+  }
+
+  .mtx-time-input.mtx-time-input-active {
+    color: theming.get-color-from-palette($primary, text);
+    caret-color: theming.get-color-from-palette($primary, text);
+    // border-color: theming.get-color-from-palette($primary, .2);
+    background-color: theming.get-color-from-palette($primary, .2);
+  }
+
+  .mtx-time-input.mtx-time-input-active:focus {
+    background-color: theming.get-color-from-palette($background, background);
+    border-color: theming.get-color-from-palette($primary, text);
+    color: theming.get-color-from-palette($primary, text);
+  }
+
+  .mtx-time-input.mtx-time-input-active:focus::placeholder {
+    color: theming.get-color-from-palette($primary, .6);
+  }
 }
 
 @mixin typography($config-or-theme) {

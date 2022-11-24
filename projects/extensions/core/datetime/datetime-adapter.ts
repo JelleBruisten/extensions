@@ -17,9 +17,9 @@ export abstract class DatetimeAdapter<D> extends DateAdapter<D> {
 
   abstract getMinuteNames(): string[];
 
-  abstract addCalendarHours(date: D, months: number): D;
+  abstract addCalendarHours(date: D, hours: number): D;
 
-  abstract addCalendarMinutes(date: D, months: number): D;
+  abstract addCalendarMinutes(date: D, minutes: number): D;
 
   abstract createDatetime(
     year: number,

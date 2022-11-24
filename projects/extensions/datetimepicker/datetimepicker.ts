@@ -306,6 +306,18 @@ export class MtxDatetimepicker<D> implements OnDestroy {
   }
   private _touchUi = false;
 
+  /**
+   * Wheter the calendar should show manual time inputs, if off will just show clock
+   */
+  @Input()
+  get timeInput(): boolean {
+    return this._timeInput;
+  }
+  set timeInput(value: boolean) {
+    this._timeInput = coerceBooleanProperty(value);
+  }
+  private _timeInput = false;
+
   /** Whether the datetimepicker pop-up should be disabled. */
   @Input()
   get disabled(): boolean {

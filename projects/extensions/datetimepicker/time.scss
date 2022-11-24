@@ -1,0 +1,45 @@
+.mtx-time-wrapper {
+  // padding-top: 10px;
+  // padding-left: 24px;
+  // padding-right: 24px;
+  // padding-bottom: 10px;
+
+  padding: 10px 24px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+$time-font-size: 40px;
+
+.mtx-time-input {
+  width: 80px;
+  height: 64px;
+  line-height: 80px;
+  vertical-align: middle;
+  font-size: $time-font-size;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.mtx-time-input::placeholder {
+  text-align: center;
+}
+
+.mtx-time-input:focus {
+  outline: none;
+}
+
+.mtx-time-input.mtx-time-input-active:focus {
+  border-width: 2px;
+  border-style: solid;
+}
+
+.mtx-time-seperator {
+  height: 64px;
+  font-size: $time-font-size;
+  text-align: center;
+  margin-left: 4px;
+  margin-right: 4px;
+  display: grid;
+  place-items: center;
+}

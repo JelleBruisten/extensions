@@ -206,6 +206,7 @@ export class MtxDatetimepickerInput<D>
     if (this._datetimepicker) {
       this._datetimepickerSubscription = this._datetimepicker.selectedChanged.subscribe(
         (selected: D) => {
+          console.log(selected);
           this.value = selected;
           this._cvaOnChange(selected);
           this._onTouched();
